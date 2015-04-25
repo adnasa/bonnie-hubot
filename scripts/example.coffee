@@ -12,7 +12,7 @@ module.exports = (robot) ->
   robot.respond /hello/i, (res) ->
     res.reply "hello"
 
-  robot.hear /hello/i, (rest) ->
+  robot.hear /hello/i, (res) ->
     res.send "hello!"
 
   # robot.hear /badger/i, (res) ->
