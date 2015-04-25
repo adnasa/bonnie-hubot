@@ -17,5 +17,5 @@ module.exports = (robot) ->
     else
       res.reply "hey bae"
 
-  robot.hear /icebreaker-deploy (.*)/i, (res) ->
+  robot.hear /icebreaker-deploy (.*)?/i, (res) ->
     res.reply "deploying icebreaker!"
