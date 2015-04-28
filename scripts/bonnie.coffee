@@ -1,9 +1,9 @@
 # Description:
-#   This should be the badoo service for our hubot
-
+#   This is bonnie! Your very own DAAS (Datebot as a service)
+#
 # Commands:
-#   hubot icebreaker-suggest - Get a suggestion of an icebreaker you would want to deploy
-#   hubot icebreaker-deploy <icebreaker> - Deploy a selected icebreaker
+#   bonnie prepare - Prepares a statement to be deployed
+#   bonnie - Deploys the prepared statement
 
 module.exports = (robot) ->
 
