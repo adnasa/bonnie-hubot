@@ -12,9 +12,7 @@ module.exports = (robot) ->
 
     # Send a request to get a prepared-statement
     message.robot.http("http://demo0986277.mockable.io/ice-breaker/prepare").get() (err, response, body) ->
-
       if response.statusCode == 200
-
         responseContent = JSON.parse(body)
 
         if responseContent.hasOwnProperty("message")
@@ -29,12 +27,6 @@ module.exports = (robot) ->
 
           message.reply "Prepared statement: \n" + responseContentMessagePartialDisplay.join "\n"
 
-        else
-          message.reply "There is something wrong :("
-
-      else
-        message.reply "There is something wrong :("
-
   # Deploy the statement that is prepared
   robot.respond /deploy/i, (message) ->
     message.robot.http("http://demo0986277.mockable.io/ice-breaker/deploy").put() (err, response, body) ->
@@ -43,20 +35,6 @@ module.exports = (robot) ->
 
         if responseContent.hasOwnProperty("message")
           message.reply responseContent.message + " :)"
-        else
-          message.reply "There is something wrong :("
-
-      else
-        message.reply "There is something wrong :("
-
-  robot.respond /get the girls/i, (message) ->
-    message.robot.http("http://192.168.33.10/").get() (erro, response, body) ->
-      responseContent = JSON.parse(body)
-      responseContentMessagePartialDisplay = []
-
-      responseContent.forEach (value) ->
-        message.reply value.name
-
 
   # Register a user for scraping capabilities
   robot.respond /register (badoo|happypancake) (\w+) (\w+) (.*)/i, (message) ->
@@ -72,11 +50,3 @@ module.exports = (robot) ->
 
         if (responseContent.hasOwnProperty("message"))
           message.reply responseContent.message
-        else
-          message.reply "Something went wrong"
-      else
-        message.reply "Something went wrong"
-
-
-
-    # service, user, pass, token
