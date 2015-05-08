@@ -1,5 +1,5 @@
 # Description:
-#   Messing around with the YouTube API.
+#   A DAAS I'm working on
 #
 # Commands:
 #   hubot deploy
