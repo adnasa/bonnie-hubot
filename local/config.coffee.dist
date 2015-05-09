@@ -1,0 +1,8 @@
+config =
+  URL:
+    PREPARE  : "http://demo0986277.mockable.io/ice-breaker/prepare",
+    DEPLOY   : "http://demo0986277.mockable.io/ice-breaker/deploy"
+    REGISTER : "http://demo0986277.mockable.io/user/register"
+    PULL_MESSAGES: "http://demo0986277.mockable.io/user/1/pull-messages"
+
+module.exports = config

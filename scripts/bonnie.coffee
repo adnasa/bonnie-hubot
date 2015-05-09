@@ -4,6 +4,8 @@
 # Commands:
 #   hubot deploy
 
+CONFIG = require("../local/config")
+
 module.exports = (robot) ->
 
   # Prepare a statement for the user
@@ -11,7 +13,7 @@ module.exports = (robot) ->
     # icebreakerRandomIndex = Math.floor Math.random() * icebreakers.length
 
     # Send a request to get a prepared-statement
-    message.robot.http("http://demo0986277.mockable.io/ice-breaker/prepare").get() (err, response, body) ->
+    message.robot.http(CONFIG.URL.PREPARE).get() (err, response, body) ->
       if response.statusCode == 200
         responseContent = JSON.parse(body)
 
@@ -29,7 +31,7 @@ module.exports = (robot) ->
 
   # Deploy the statement that is prepared
   robot.respond /deploy/i, (message) ->
-    message.robot.http("http://demo0986277.mockable.io/ice-breaker/deploy").put() (err, response, body) ->
+    message.robot.http(CONFIG.URL.DEPLOY).put() (err, response, body) ->
       if response.statusCode == 200
         responseContent = JSON.parse(body)
 
@@ -44,9 +46,21 @@ module.exports = (robot) ->
     pass = messageMatch[3]
     token = messageMatch[4]
 
-    message.robot.http("http://demo0986277.mockable.io/user/register").post() (err, responseObj, body) ->
+    message.robot.http(CONFIG.URL.REGISTER).post() (err, responseObj, body) ->
       if (responseObj.statusCode >= 200 && responseObj.statusCode <= 300)
         responseContent = JSON.parse body
 
         if (responseContent.hasOwnProperty("message"))
           message.reply responseContent.message
+
+  # Pull messages from the registered service
+  robot.respond /pull messages/i, (message) ->
+    message.robot.http(CONFIG.URL.PULL_MESSAGES).get() (err, responseObj, body) ->
+      if (responseObj.statusCode == 200)
+        responseContent = JSON.parse body
+        if (responseContent.hasOwnProperty("message") && responseContent.message != null)
+          responseContentMessage = JSON.parse responseContent.message
+
+          for item in responseContentMessage.list
+            message.send item.username + ": " + item.message
+
