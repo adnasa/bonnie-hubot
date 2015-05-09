@@ -58,7 +58,7 @@ module.exports = (robot) ->
     message.robot.http(CONFIG.URL.PULL_MESSAGES).get() (err, responseObj, body) ->
       if (responseObj.statusCode == 200)
         responseContent = JSON.parse body
-        if (responseContent.hasOwnProperty("message"))
+        if (responseContent.hasOwnProperty("message") && responseContent.message != null)
           responseContentMessage = JSON.parse responseContent.message
 
           for item in responseContentMessage.list
