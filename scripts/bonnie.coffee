@@ -52,3 +52,15 @@ module.exports = (robot) ->
 
         if (responseContent.hasOwnProperty("message"))
           message.reply responseContent.message
+
+  # Pull messages from the registered service
+  robot.respond /pull messages/i, (message) ->
+    message.robot.http(CONFIG.URL.PULL_MESSAGES).get() (err, responseObj, body) ->
+      if (responseObj.statusCode == 200)
+        responseContent = JSON.parse body
+        if (responseContent.hasOwnProperty("message"))
+          responseContentMessage = JSON.parse responseContent.message
+
+          for item in responseContentMessage.list
+            message.send item.username + ": " + item.message
+
