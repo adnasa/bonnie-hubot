@@ -52,23 +52,29 @@ module.exports = (robot) ->
           message.reply "Something went wrong!"
 
   # Register a user for scraping capabilities
-  robot.respond /register (badoo|happypancake) (\w+) (\w+) (.*)/i, (message) ->
+  robot.respond /register (\w+) (\w+) (\w+) (.*)/i, (message) ->
     messageMatch = message.match
+    rawMessageObject = message.message
 
-    if (count(messageMatch) < 4)
+    if (messageMatch.length < 4)
       message.reply "Invalid registration"
 
-    service = messageMatch[1]
-    user    = messageMatch[2]
-    pass    = messageMatch[3]
-    token   = messageMatch[4]
+    postMessage =
+      user: rawMessageObject.user
+      params:
+        service  : messageMatch[1]
+        name     : messageMatch[2]
+        password : messageMatch[3]
+        token    : messageMatch[4]
 
-    message.robot.http(CONFIG.URL.REGISTER).post() (err, responseObj, body) ->
-      if (responseObj.statusCode >= 200 && responseObj.statusCode <= 300)
-        responseContent = JSON.parse body
+    message.robot.http(CONFIG.URL.REGISTER)
+      .headers(postHeaders)
+      .post(JSON.stringify(postMessage)) (err, response, body) ->
 
-        if (responseContent.hasOwnProperty("message"))
+        if response && response.statusCode == 201
+          responseContent = JSON.parse(body)
           message.reply responseContent.message
+
 
   # Pull messages from the registered service
   robot.respond /pull messages/i, (message) ->
