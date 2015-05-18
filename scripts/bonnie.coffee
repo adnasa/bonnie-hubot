@@ -12,27 +12,6 @@ postHeaders =
 
 module.exports = (robot) ->
 
-  # Prepare a statement for the user
-  robot.respond /prepare/i, (message) ->
-    # icebreakerRandomIndex = Math.floor Math.random() * icebreakers.length
-
-    # Send a request to get a prepared-statement
-    message.robot.http(CONFIG.URL.PREPARE).get() (err, response, body) ->
-      if response.statusCode == 200
-        responseContent = JSON.parse(body)
-
-        if responseContent.hasOwnProperty("message")
-
-          # Split the message into partials and prefix each partial with a quote marker
-          responseContentMessage = responseContent.message.split "\n"
-          responseContentMessagePartialDisplay = []
-
-          for m in responseContentMessage
-            m = ">" + m
-            responseContentMessagePartialDisplay.push(m)
-
-          message.reply "Prepared statement: \n" + responseContentMessagePartialDisplay.join "\n"
-
   # Deploy the statement that is prepared
   robot.respond /deploy/i, (message) ->
     rawMessageObject = message.message
