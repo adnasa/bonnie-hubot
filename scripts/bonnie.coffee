@@ -2,7 +2,10 @@
 #   A DAAS I'm working on
 #
 # Commands:
-#   hubot deploy
+#   DAAS => hubot deploy: `:message` - Deploy a specific message. message is optional.
+#   DAAS => hubot register `service` `username` `password` `TOKEN` - Register an account at a service
+#   DAAS => hubot poll - Poll message from your registered service
+
 
 CONFIG = require("../local/config")
 
